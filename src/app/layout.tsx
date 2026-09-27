@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import {
+  SITE_URL,
+  DEFAULT_TITLE,
+  TITLE_TEMPLATE,
+  KEYWORDS,
+  PERSON,
+  buildPersonJsonLd,
+} from "@/lib/seo";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -13,32 +21,45 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://devsanghavi.com"),
-  title: "Dev Sanghavi - Portfolio",
-  description: "Dev Sanghavi is a 12-year-old 7th-grade student, developer, and creator based in Houston, TX. Explore Dev Sanghavi's portfolio featuring accomplishments in software, AI, and robotics like Churro and Verde.",
-  keywords: ["Dev Sanghavi", "Houston", "Developer", "Student", "Portfolio", "Churro", "Verde", "AI", "Software"],
-  authors: [{ name: "Dev Sanghavi" }],
-  creator: "Dev Sanghavi",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: DEFAULT_TITLE,
+    template: TITLE_TEMPLATE,
+  },
+  description: PERSON.tagline,
+  keywords: KEYWORDS,
+  authors: [{ name: PERSON.name, url: SITE_URL }],
+  creator: PERSON.name,
+  publisher: PERSON.name,
+  applicationName: PERSON.name,
+  alternates: {
+    canonical: "/",
+  },
+  category: "technology",
   openGraph: {
-    title: "Dev Sanghavi - Portfolio",
-    description: "Personal portfolio of Dev Sanghavi, a 12 yr old developer and creator from Houston, TX.",
-    url: "https://devsanghavi.com",
-    siteName: "Dev Sanghavi",
+    title: DEFAULT_TITLE,
+    description: PERSON.tagline,
+    url: SITE_URL,
+    siteName: PERSON.name,
     locale: "en_US",
-    type: "website",
+    type: "profile",
+    firstName: PERSON.givenName,
+    lastName: PERSON.familyName,
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Dev Sanghavi - Developer, Creator, Student",
+        alt: "Dev Sanghavi — developer, creator, and founder of Learnr",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dev Sanghavi - Portfolio",
-    description: "Personal portfolio of Dev Sanghavi, a 12 yr old developer and creator from Houston, TX.",
+    site: "@devsanghavi05",
+    creator: "@devsanghavi05",
+    title: DEFAULT_TITLE,
+    description: PERSON.tagline,
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -47,6 +68,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
 };
@@ -61,6 +85,12 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${spaceGrotesk.className} bg-white text-zinc-900 antialiased selection:bg-zinc-200`}
       >
+        <script
+          type="application/ld+json"
+          // Structured data (Person + Organization + WebSite) — powers the
+          // "Dev Sanghavi is…" knowledge result. Rendered as static markup.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPersonJsonLd()) }}
+        />
         {children}
       </body>
     </html>

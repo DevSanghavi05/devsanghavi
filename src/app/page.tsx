@@ -5,10 +5,12 @@ import { HomeContactArea } from "@/components/GithubActivityModal";
 import { getGithubActivity } from "@/lib/githubActivity";
 import { TestNav } from "./test/TestNav";
 import styles from "./test/test.module.css";
+import { DEFAULT_TITLE, PERSON } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Dev Sanghavi - Founder of Learnr",
-  description: "Dev Sanghavi is a 12-year-old developer and creator from Houston, TX, and the founder of Learnr. See what he's building.",
+  title: DEFAULT_TITLE,
+  description: PERSON.tagline,
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {

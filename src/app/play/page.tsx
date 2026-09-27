@@ -5,8 +5,10 @@ import { TestNav } from "../test/TestNav";
 import styles from "../test/test.module.css";
 
 export const metadata: Metadata = {
-  title: "Play - Dev Sanghavi",
-  description: "Play Dev Sanghavi's mini arcade.",
+  title: "Play",
+  description:
+    "Play Dev Sanghavi's mini arcade — a collection of browser games including Pong, PacMan, and a multiplayer Blaster Duel.",
+  alternates: { canonical: "/play" },
 };
 
 export default function PlayPage() {

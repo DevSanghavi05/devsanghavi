@@ -6,6 +6,8 @@ import styles from "../test.module.css";
 export const metadata: Metadata = {
   title: "About Dev Sanghavi",
   description: "Learn more about Dev Sanghavi, founder of Learnr.",
+  // Internal scaffolding route — keep it out of search results.
+  robots: { index: false, follow: false },
 };
 
 export default function AboutPage() {
