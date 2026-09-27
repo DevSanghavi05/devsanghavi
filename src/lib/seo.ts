@@ -6,6 +6,9 @@
 
 export const SITE_URL = "https://devsanghavi.com";
 
+/** Google Search Console ownership-verification token. */
+export const GOOGLE_SITE_VERIFICATION = "nUPVDUwJr4p2OEa5kDuBo53hvJISn2nsEJUhKrtf8zc";
+
 export const PERSON = {
   name: "Dev Sanghavi",
   givenName: "Dev",

@@ -7,6 +7,7 @@ import {
   TITLE_TEMPLATE,
   KEYWORDS,
   PERSON,
+  GOOGLE_SITE_VERIFICATION,
   buildPersonJsonLd,
 } from "@/lib/seo";
 
@@ -36,6 +37,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   category: "technology",
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+  },
   openGraph: {
     title: DEFAULT_TITLE,
     description: PERSON.tagline,
