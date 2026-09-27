@@ -4,7 +4,12 @@
  * "Dev Sanghavi is…" story stays identical everywhere search engines look.
  */
 
-export const SITE_URL = "https://devsanghavi.com";
+// Canonical origin. Uses the www host because the bare apex (devsanghavi.com)
+// currently serves an invalid TLS certificate (stale DNS A records point at a
+// domain-forwarding service). www is on Vercel with a valid Let's Encrypt cert,
+// so Googlebot can actually fetch it. Revert to the apex once the apex DNS is
+// cleaned up and a valid apex cert issues.
+export const SITE_URL = "https://www.devsanghavi.com";
 
 /** Google Search Console ownership-verification token. */
 export const GOOGLE_SITE_VERIFICATION = "nUPVDUwJr4p2OEa5kDuBo53hvJISn2nsEJUhKrtf8zc";
