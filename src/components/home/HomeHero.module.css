@@ -1,0 +1,79 @@
+/* Words never break mid-word; letters are inline-blocks so each can be moved by transform. */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.letter {
+  display: inline-block;
+  cursor: grab;
+  touch-action: none;
+  transition: color 120ms ease;
+  user-select: none;
+}
+
+.letter:hover,
+.letter[data-dragging="true"] {
+  color: #0d47c7;
+}
+
+.letter[data-dragging="true"] {
+  z-index: 2;
+  cursor: grabbing;
+}
+
+/* text-decoration doesn't reach inline-block children, so each letter underlines itself. */
+.learnr .letter {
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+}
+
+/* Keeps the contact row/chart a single block for the physics colliders. */
+.contacts {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.reset {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 6;
+  display: inline-flex;
+  min-height: 40px;
+  padding: 0 14px;
+  cursor: pointer;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #182033;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 550;
+  transition: background-color 160ms ease, border-color 160ms ease;
+  align-items: center;
+  gap: 8px;
+}
+
+.reset svg {
+  width: 16px;
+  height: 16px;
+}
+
+.reset:hover {
+  border-color: #c9d0da;
+  background: #f4f6f8;
+}
+
+.reset:focus-visible {
+  outline: 3px solid rgb(20 92 243 / 28%);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter,
+  .reset {
+    transition: none;
+  }
+}

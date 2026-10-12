@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PongGame } from "@/components/PongGame";
-import { HomeContactArea } from "@/components/GithubActivityModal";
+import { HomeHero } from "@/components/home/HomeHero";
 import { getGithubActivity } from "@/lib/githubActivity";
 import { TestNav } from "./test/TestNav";
 import styles from "./test/test.module.css";
@@ -21,39 +20,7 @@ export default async function HomePage() {
       <TestNav active="home" />
 
       <div className={`${styles.frame} ${styles.homeFrame}`}>
-        <section className={`${styles.hero} ${styles.homeHero}`} aria-labelledby="home-introduction">
-          <div className={styles.intro}>
-            <Image
-              className={`${styles.portrait} ${styles.homePortrait}`}
-              src="/icon.png"
-              alt="Dev Sanghavi"
-              width={210}
-              height={210}
-              priority
-            />
-
-            <h1 id="home-introduction" className={`${styles.copy} ${styles.homeCopy}`}>
-              <span>
-                I&apos;m <em className={styles.blue}>Dev Sanghavi</em>,
-              </span>
-              <span>
-                the <em>founder</em> of{" "}
-                <a
-                  className={styles.learnrLink}
-                  href="https://getlearnr.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <em className={styles.blue}>Learnr</em>
-                </a>
-                .
-              </span>
-            </h1>
-
-            <HomeContactArea activity={githubActivity} />
-          </div>
-        </section>
-
+        <HomeHero activity={githubActivity} />
       </div>
       <PongGame />
     </main>
