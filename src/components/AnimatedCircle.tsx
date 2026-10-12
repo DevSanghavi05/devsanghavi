@@ -295,11 +295,11 @@ export function AnimatedCircle() {
               <div className="w-full max-w-sm">
                 <p className="text-[10px] font-bold text-zinc-300 uppercase tracking-[0.3em] mb-4 text-center">Contact</p>
                 <div className="flex flex-col gap-3">
-                  <a href="mailto:devrsanghavi05@gmail.com" className="cursor-target flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-zinc-200/60 bg-white hover:border-zinc-300 hover:bg-zinc-50/50 transition-colors">
+                  <a href="mailto:dev@getlearnr.com" className="cursor-target flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-zinc-200/60 bg-white hover:border-zinc-300 hover:bg-zinc-50/50 transition-colors">
                     <Mail className="w-5 h-5 text-zinc-500" />
                     <div>
                       <p className="font-black text-zinc-800 tracking-[0.1em] uppercase text-xs">Email</p>
-                      <p className="text-[9px] font-bold text-zinc-400 tracking-wide mt-0.5">devrsanghavi05@gmail.com</p>
+                      <p className="text-[9px] font-bold text-zinc-400 tracking-wide mt-0.5">dev@getlearnr.com</p>
                     </div>
                   </a>
                   <a href="tel:7133633348" className="cursor-target flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-zinc-200/60 bg-white hover:border-zinc-300 hover:bg-zinc-50/50 transition-colors">

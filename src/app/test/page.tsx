@@ -60,7 +60,7 @@ export default function TestPage() {
                   <summary className={styles.contactTrigger} aria-label="Show email">
                     <Mail aria-hidden="true" />
                   </summary>
-                  <a className={styles.contactValue} href="mailto:devrsanghavi05@gmail.com">devrsanghavi05@gmail.com</a>
+                  <a className={styles.contactValue} href="mailto:dev@getlearnr.com">dev@getlearnr.com</a>
                 </details>
               </li>
               <li>

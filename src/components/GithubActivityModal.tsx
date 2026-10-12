@@ -19,11 +19,9 @@ export function HomeContactArea({ activity }: { activity: GithubActivityData }) 
         <li>
           <a
             className={styles.homeContact}
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=devrsanghavi05%40gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Email Dev Sanghavi at devrsanghavi05@gmail.com"
-            title="devrsanghavi05@gmail.com"
+            href="mailto:dev@getlearnr.com"
+            aria-label="Email Dev Sanghavi at dev@getlearnr.com"
+            title="dev@getlearnr.com"
           >
             <Mail aria-hidden="true" />
           </a>
