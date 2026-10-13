@@ -1,6 +1,13 @@
+"use client";
+
+import { useMemo, useRef } from "react";
 import Image from "next/image";
+import { RotateCcw } from "lucide-react";
 import { InfoPopover } from "@/components/InfoPopover";
 import popoverStyles from "@/components/InfoPopover.module.css";
+import { Split } from "@/components/home/Split";
+import { useLetterPhysics } from "@/components/home/useLetterPhysics";
+import letterStyles from "@/components/home/HomeHero.module.css";
 import styles from "../test.module.css";
 
 const LANGUAGES = [
@@ -10,10 +17,26 @@ const LANGUAGES = [
 ];
 
 export function AboutContent() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const blocks = useMemo(() => [gridRef], []);
+
+  // The title's letters are loose bodies; the photo and text below form one solid shelf for them to land on.
+  const { touched, reset } = useLetterPhysics({ arena: stageRef, word: titleRef, blocks });
+
   return (
-    <>
-      <h1 id="about-heading" className={styles.aboutTitle}>About</h1>
-      <div className={styles.aboutGrid}>
+    <div ref={stageRef} className={styles.aboutStage}>
+      <h1 id="about-heading" ref={titleRef} className={styles.aboutTitle} aria-label="About">
+        <Split text="About" />
+      </h1>
+      {touched ? (
+        <button type="button" className={`${letterStyles.reset} ${styles.aboutReset}`} onClick={reset}>
+          <RotateCcw aria-hidden="true" />
+          Reset letters
+        </button>
+      ) : null}
+      <div ref={gridRef} className={styles.aboutGrid}>
         <figure className={styles.travelFigure}>
           <Image
             className={styles.travelImage}
@@ -74,7 +97,6 @@ export function AboutContent() {
           </p>
         </div>
       </div>
-
-    </>
+    </div>
   );
 }

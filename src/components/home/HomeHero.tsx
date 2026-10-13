@@ -5,30 +5,10 @@ import Image from "next/image";
 import { RotateCcw } from "lucide-react";
 import { HomeContactArea } from "@/components/GithubActivityModal";
 import type { GithubActivityData } from "@/lib/githubActivity";
+import { Split } from "./Split";
 import { useLetterPhysics } from "./useLetterPhysics";
 import pageStyles from "@/app/test/test.module.css";
 import styles from "./HomeHero.module.css";
-
-/** Splits text into words of single-character spans; spaces stay as plain text so lines wrap between words. */
-function Split({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/(\s+)/).map((chunk, index) =>
-        chunk === "" || /^\s+$/.test(chunk) ? (
-          chunk
-        ) : (
-          <span key={index} className={styles.word} aria-hidden="true">
-            {[...chunk].map((character, i) => (
-              <span key={i} className={styles.letter} data-letter>
-                {character}
-              </span>
-            ))}
-          </span>
-        ),
-      )}
-    </>
-  );
-}
 
 export function HomeHero({ activity }: { activity: GithubActivityData }) {
   const arenaRef = useRef<HTMLElement>(null);

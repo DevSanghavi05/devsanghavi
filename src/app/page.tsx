@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ElasticFrame } from "@/components/ElasticFrame";
 import { PongGame } from "@/components/PongGame";
 import { HomeHero } from "@/components/home/HomeHero";
 import { getGithubActivity } from "@/lib/githubActivity";
@@ -19,9 +20,9 @@ export default async function HomePage() {
     <main className={styles.page}>
       <TestNav active="home" />
 
-      <div className={`${styles.frame} ${styles.homeFrame}`}>
+      <ElasticFrame className={`${styles.frame} ${styles.homeFrame}`}>
         <HomeHero activity={githubActivity} />
-      </div>
+      </ElasticFrame>
       <PongGame />
     </main>
   );

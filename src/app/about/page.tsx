@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { TestNav } from "../test/TestNav";
 import { AboutContent } from "../test/about/AboutContent";
+import { ElasticFrame } from "@/components/ElasticFrame";
 import { PongGame } from "@/components/PongGame";
 import styles from "../test/test.module.css";
 import { SITE_URL, PERSON, ORG } from "@/lib/seo";
@@ -40,11 +41,11 @@ export default function AboutPage() {
       />
       <TestNav active="about" />
 
-      <div className={`${styles.frame} ${styles.aboutFrame}`}>
+      <ElasticFrame className={`${styles.frame} ${styles.aboutFrame}`}>
         <section className={styles.aboutSection} aria-labelledby="about-heading">
           <AboutContent />
         </section>
-      </div>
+      </ElasticFrame>
       <PongGame />
     </main>
   );

@@ -312,6 +312,18 @@
   background: transparent;
 }
 
+/* Same width as the grid, so the letters' side walls meet the photo and text with no gap to wedge into. */
+.aboutStage {
+  position: relative;
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+.aboutStage .aboutReset {
+  top: 0;
+  right: 0;
+}
+
 .aboutTitle {
   width: min(1160px, 100%);
   margin: 0 auto 30px;

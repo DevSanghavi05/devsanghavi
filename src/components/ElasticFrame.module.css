@@ -1,0 +1,14 @@
+/* Drawn only while the frame is being stretched or still wobbling; at rest the real CSS border shows. */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  display: none;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.overlay[data-active="true"] {
+  display: block;
+}
