@@ -205,8 +205,30 @@
 }
 
 .homeContacts {
+  position: relative;
   margin-top: 38px;
   gap: 34px;
+}
+
+/* Out of flow so showing it never resizes the contacts block the letter physics measures. */
+.emailNote {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 10px;
+  transform: translateX(-50%);
+  color: #353c4c;
+  width: max-content;
+  max-width: min(88vw, 340px);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.emailNote:empty {
+  display: none;
 }
 
 .contactItem {

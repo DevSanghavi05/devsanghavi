@@ -1,12 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Github, Mail, Phone, X } from "lucide-react";
 import type { GithubActivityData } from "@/lib/githubActivity";
 import styles from "@/app/test/test.module.css";
 
+const EMAIL = "dev@getlearnr.com";
+/** How long to wait for a mail app to take focus before assuming the mailto: went nowhere. */
+const MAIL_APP_WAIT_MS = 1500;
+
 export function HomeContactArea({ activity }: { activity: GithubActivityData }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [emailNote, setEmailNote] = useState<"copied" | "show" | null>(null);
+  const mailWatch = useRef<(() => void) | null>(null);
+
+  useEffect(() => () => mailWatch.current?.(), []);
+
+  /**
+   * A mailto: link silently does nothing when the browser has no mail app or web handler. Let the
+   * native link run, and if the page never loses focus, fall back to showing (and copying) the address.
+   */
+  const onEmailClick = () => {
+    mailWatch.current?.();
+    setEmailNote(null);
+
+    let handedOff = false;
+    const leave = () => {
+      handedOff = true;
+    };
+    window.addEventListener("blur", leave);
+    document.addEventListener("visibilitychange", leave);
+
+    const timer = window.setTimeout(() => {
+      stop();
+      if (handedOff || document.hidden) return;
+      setEmailNote("show");
+      navigator.clipboard?.writeText(EMAIL).then(() => setEmailNote("copied"), () => {});
+    }, MAIL_APP_WAIT_MS);
+
+    function stop() {
+      window.clearTimeout(timer);
+      window.removeEventListener("blur", leave);
+      document.removeEventListener("visibilitychange", leave);
+      mailWatch.current = null;
+    }
+    mailWatch.current = stop;
+  };
 
   if (!isOpen) {
     return (
@@ -19,9 +58,10 @@ export function HomeContactArea({ activity }: { activity: GithubActivityData }) 
         <li>
           <a
             className={styles.homeContact}
-            href="mailto:dev@getlearnr.com"
-            aria-label="Email Dev Sanghavi at dev@getlearnr.com"
-            title="dev@getlearnr.com"
+            href={`mailto:${EMAIL}`}
+            aria-label={`Email Dev Sanghavi at ${EMAIL}`}
+            title={EMAIL}
+            onClick={onEmailClick}
           >
             <Mail aria-hidden="true" />
           </a>
@@ -30,6 +70,10 @@ export function HomeContactArea({ activity }: { activity: GithubActivityData }) 
           <button type="button" className={styles.homeContact} onClick={() => setIsOpen(true)} aria-label="Open GitHub activity">
             <Github aria-hidden="true" />
           </button>
+        </li>
+        <li className={styles.emailNote} role="status">
+          {emailNote === "copied" ? `No mail app opened. ${EMAIL} is copied.` : null}
+          {emailNote === "show" ? `No mail app opened. Write to ${EMAIL}.` : null}
         </li>
       </ul>
     );
