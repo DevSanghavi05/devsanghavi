@@ -1,0 +1,4 @@
+Quicksand, Bricolage Grotesque and Nunito are licensed under the SIL Open Font
+License, Version 1.1 (https://openfontlicense.org). Files are the Latin variable
+subsets served by Google Fonts, self-hosted so builds never depend on fetching
+them (Turbopack failed to resolve some Google Fonts URLs on Vercel).

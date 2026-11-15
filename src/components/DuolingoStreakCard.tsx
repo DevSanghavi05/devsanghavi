@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { Nunito } from "next/font/google";
+import localFont from "next/font/local";
 import { DUOLINGO_PROFILE_URL, type DuolingoStreak } from "@/lib/duolingo";
 import styles from "./DuolingoStreakCard.module.css";
 
-// Closest open match to Duolingo's rounded, heavy type.
-const nunito = Nunito({ subsets: ["latin"], weight: ["700", "800", "900"] });
+// Closest open match to Duolingo's rounded, heavy type; self-hosted (src/fonts) so
+// builds never depend on fetching Google Fonts.
+const nunito = localFont({ src: "../fonts/nunito-latin-wght.woff2", weight: "700 900" });
 
 /** Surface class for the InfoPopover that hosts this card. */
 export const duolingoCardClassName = `${styles.card} ${nunito.className}`;

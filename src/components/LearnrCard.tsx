@@ -1,11 +1,16 @@
 import Image from "next/image";
-import { Bricolage_Grotesque, Quicksand } from "next/font/google";
+import localFont from "next/font/local";
 import { LEARNR_APP_STORE_URL, LEARNR_SITE_URL, type LearnrApp } from "@/lib/learnrApp";
 import styles from "./LearnrCard.module.css";
 
 // Learnr's own type: Bricolage Grotesque headlines over Quicksand UI text.
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["700", "800"], variable: "--learnr-title" });
-const quicksand = Quicksand({ subsets: ["latin"], weight: ["500", "600", "700"] });
+// Self-hosted (src/fonts) so builds never depend on fetching Google Fonts.
+const bricolage = localFont({
+  src: "../fonts/bricolage-grotesque-latin-wght.woff2",
+  weight: "700 800",
+  variable: "--learnr-title",
+});
+const quicksand = localFont({ src: "../fonts/quicksand-latin-wght.woff2", weight: "500 700" });
 
 /** Surface class for the InfoPopover that hosts this card. */
 export const learnrCardClassName = `${styles.card} ${quicksand.className} ${bricolage.variable}`;
