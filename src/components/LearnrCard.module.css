@@ -1,0 +1,208 @@
+/* Learnr's tokens (from learnr.io): dodger blue accent, deep-blue 3D ledge, slate text. */
+.card {
+  --learnr-blue: #1e90ff;
+  --learnr-blue-hover: #3a9dff;
+  --learnr-blue-edge: #1565c0;
+  --learnr-text: #0f172a;
+  --learnr-sub: #475569;
+  --learnr-muted: #64748b;
+  --learnr-line: #e2e8f0;
+  --learnr-soft: #f8fafc;
+
+  display: grid;
+  padding: 20px;
+  border: 2px solid var(--learnr-line);
+  border-radius: 20px;
+  background: #ffffff;
+  color: var(--learnr-text);
+  gap: 16px;
+  letter-spacing: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border: 1px solid var(--learnr-line);
+  border-radius: 22.5%;
+}
+
+.identity {
+  display: grid;
+  gap: 4px;
+}
+
+.title {
+  font-family: var(--learnr-title), sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* The site's signature: one word set in a solid blue block. */
+.tagline {
+  font-family: var(--learnr-title), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.highlight {
+  padding: 0 0.22em;
+  background: var(--learnr-blue);
+  color: #ffffff;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.pitch {
+  color: var(--learnr-sub);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+/* One row of four: text and padding scale with the card so the row never wraps, even on a 320px phone. */
+.topics {
+  display: flex;
+  container-type: inline-size;
+  gap: 5px;
+}
+
+.topic {
+  display: flex;
+  min-width: 0;
+  padding: 5px min(9px, 2.2cqi);
+  border: 1px solid var(--learnr-line);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: min(0.9rem, 3.75cqi);
+  font-weight: 700;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
+.topicAccent {
+  border-color: var(--learnr-blue-edge);
+  background: var(--learnr-blue);
+  color: #ffffff;
+}
+
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--learnr-soft);
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 2px;
+}
+
+.stars {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.star {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.starEmpty {
+  fill: var(--learnr-line);
+}
+
+.starFull {
+  fill: #ffb800;
+}
+
+.ratingValue {
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ratingMeta {
+  color: var(--learnr-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+/* Learnr's chunky 3D buttons; `.card` raises specificity over the About copy's link rule. */
+.card .primary,
+.card .secondary {
+  display: flex;
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease;
+}
+
+.card .primary {
+  border-bottom: 4px solid var(--learnr-blue-edge);
+  background: var(--learnr-blue);
+  color: #ffffff;
+}
+
+.card .primary:hover {
+  background: var(--learnr-blue-hover);
+}
+
+.card .secondary {
+  border: 2px solid var(--learnr-line);
+  border-bottom-width: 4px;
+  background: #ffffff;
+  color: var(--learnr-blue);
+}
+
+.card .secondary:hover {
+  background: var(--learnr-soft);
+}
+
+/* Pressed: the ledge collapses and the face drops onto it. */
+.card .primary:active,
+.card .secondary:active {
+  margin-top: 4px;
+  border-bottom-width: 0;
+}
+
+.card .secondary:active {
+  border-bottom-width: 2px;
+  margin-top: 2px;
+}
+
+.card .primary:focus-visible,
+.card .secondary:focus-visible {
+  outline: 3px solid rgb(30 144 255 / 40%);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card .primary,
+  .card .secondary {
+    transition: none;
+  }
+}

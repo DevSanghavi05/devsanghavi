@@ -1,12 +1,16 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { RotateCcw } from "lucide-react";
 import { InfoPopover } from "@/components/InfoPopover";
 import popoverStyles from "@/components/InfoPopover.module.css";
 import { Split } from "@/components/home/Split";
 import { useLetterPhysics } from "@/components/home/useLetterPhysics";
+import { DuolingoStreakCard, duolingoCardClassName } from "@/components/DuolingoStreakCard";
+import { LearnrCard, learnrCardClassName } from "@/components/LearnrCard";
+import type { DuolingoStreak } from "@/lib/duolingo";
+import type { LearnrApp } from "@/lib/learnrApp";
 import letterStyles from "@/components/home/HomeHero.module.css";
 import styles from "../test.module.css";
 
@@ -16,7 +20,26 @@ const LANGUAGES = [
   { name: "Spanish", flag: "/flags/es.svg", country: "Spain" },
 ];
 
-export function AboutContent() {
+export function AboutContent({
+  streak: initialStreak,
+  learnrApp,
+}: {
+  streak: DuolingoStreak | null;
+  learnrApp: LearnrApp | null;
+}) {
+  // The server render may be up to a minute old; swap in Duolingo's live numbers once loaded.
+  const [streak, setStreak] = useState(initialStreak);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/duolingo", { cache: "no-store", signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload: { streak?: DuolingoStreak | null } | null) => {
+        if (payload?.streak?.days) setStreak(payload.streak);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+
   const stageRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -55,15 +78,29 @@ export function AboutContent() {
           <p>
             I love to design and develop systems, mostly in consumer software.
             Right now, I&apos;m building{" "}
-            <a href="https://getlearnr.com" target="_blank" rel="noopener noreferrer">
-              Learnr
-            </a>
+            <InfoPopover
+              label="Learnr"
+              panelLabel="About Learnr, the app Dev is building"
+              width={400}
+              href="https://getlearnr.com"
+              cardClassName={learnrCardClassName}
+            >
+              <LearnrCard app={learnrApp} />
+            </InfoPopover>
             , a platform that turns any prompt into a full, personalized course.
             We launched the iOS app and just hit 500 daily active users.
           </p>
           <p>
-            Outside of building, I love learning languages, with a 1000+ day
-            Duolingo streak. I&apos;m fluent in{" "}
+            Outside of building, I love learning languages, with a{" "}
+            <InfoPopover
+              label={`${streak ? `${streak.days.toLocaleString("en-US")}-day` : "1,000+ day"} Duolingo streak`}
+              panelLabel="Dev's live Duolingo streak"
+              width={400}
+              cardClassName={duolingoCardClassName}
+            >
+              <DuolingoStreakCard streak={streak} />
+            </InfoPopover>
+            . I&apos;m fluent in{" "}
             <InfoPopover label="3 languages" panelLabel="Languages Dev speaks" width={270}>
               <span className={popoverStyles.languages} role="list">
                 {LANGUAGES.map((language) => (

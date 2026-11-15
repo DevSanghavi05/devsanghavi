@@ -20,6 +20,13 @@ type InfoPopoverProps = {
   panelLabel: string;
   /** Panel width in CSS px. */
   width: number;
+  /** Replaces the default white card surface (for panels with their own look). */
+  cardClassName?: string;
+  /**
+   * Makes the trigger a real link: mouse clicks and keyboard Enter follow it, while a
+   * touch tap opens the panel first (there is no hover on touch).
+   */
+  href?: string;
   children: ReactNode;
 };
 
@@ -53,10 +60,10 @@ function clipBounds(el: HTMLElement) {
  * or tap. The panel flips above/below and slides sideways so it never gets
  * clipped by the scrolling frame it lives in.
  */
-export function InfoPopover({ label, panelLabel, width, children }: InfoPopoverProps) {
+export function InfoPopover({ label, panelLabel, width, cardClassName, href, children }: InfoPopoverProps) {
   const panelId = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
   const panelRef = useRef<HTMLSpanElement>(null);
   const pointerType = useRef<string>("mouse");
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -162,24 +169,46 @@ export function InfoPopover({ label, panelLabel, width, children }: InfoPopoverP
         if (!rootRef.current?.contains(event.relatedTarget as Node | null)) setOpen(false);
       }}
     >
-      <button
-        ref={triggerRef}
-        type="button"
-        className={styles.trigger}
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={(event) => {
-          // A mouse click lands after hover already opened the panel; keep it open.
-          // Touch taps and keyboard activation (detail 0) toggle.
-          if (event.detail !== 0 && pointerType.current === "mouse") return;
-          setOpen((value) => !value);
-        }}
-        onFocus={(event) => {
-          if (event.currentTarget.matches(":focus-visible")) setOpen(true);
-        }}
-      >
-        {label}
-      </button>
+      {href ? (
+        <a
+          ref={triggerRef}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.trigger}
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={(event) => {
+            if (pointerType.current === "mouse" || event.detail === 0) return;
+            event.preventDefault();
+            setOpen((value) => !value);
+          }}
+          onFocus={(event) => {
+            if (event.currentTarget.matches(":focus-visible")) setOpen(true);
+          }}
+        >
+          {label}
+        </a>
+      ) : (
+        <button
+          ref={triggerRef}
+          type="button"
+          className={styles.trigger}
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={(event) => {
+            // A mouse click lands after hover already opened the panel; keep it open.
+            // Touch taps and keyboard activation (detail 0) toggle.
+            if (event.detail !== 0 && pointerType.current === "mouse") return;
+            setOpen((value) => !value);
+          }}
+          onFocus={(event) => {
+            if (event.currentTarget.matches(":focus-visible")) setOpen(true);
+          }}
+        >
+          {label}
+        </button>
+      )}
       <span
         ref={panelRef}
         id={panelId}
@@ -196,7 +225,7 @@ export function InfoPopover({ label, panelLabel, width, children }: InfoPopoverP
           } as CSSProperties
         }
       >
-        <span className={styles.card}>{children}</span>
+        <span className={cardClassName ?? styles.card}>{children}</span>
       </span>
     </span>
   );

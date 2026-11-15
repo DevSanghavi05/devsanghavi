@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { TestNav } from "../test/TestNav";
+import { getDuolingoStreak } from "@/lib/duolingo";
+import { getLearnrApp } from "@/lib/learnrApp";
 import { AboutContent } from "../test/about/AboutContent";
 import { ElasticFrame } from "@/components/ElasticFrame";
 import { PongGame } from "@/components/PongGame";
@@ -32,7 +34,9 @@ const aboutJsonLd = {
   },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [streak, learnrApp] = await Promise.all([getDuolingoStreak(), getLearnrApp()]);
+
   return (
     <main className={styles.page}>
       <script
@@ -43,7 +47,7 @@ export default function AboutPage() {
 
       <ElasticFrame className={`${styles.frame} ${styles.aboutFrame}`}>
         <section className={styles.aboutSection} aria-labelledby="about-heading">
-          <AboutContent />
+          <AboutContent streak={streak} learnrApp={learnrApp} />
         </section>
       </ElasticFrame>
       <PongGame />
